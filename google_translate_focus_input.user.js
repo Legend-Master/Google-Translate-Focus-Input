@@ -5,6 +5,7 @@
 // @author         Tony
 // @description    Focus input area on type for Google Translate
 // @description:zh 在 Google Translate 输入的时候聚焦输入框
+// @homepage       https://github.com/Legend-Master/Google-Translate-Focus-Input
 // @icon           https://www.google.com/s2/favicons?sz=64&domain=translate.google.com
 // @updateURL      https://github.com/Legend-Master/Google-Translate-Focus-Input/raw/main/google_translate_focus_input.user.js
 // @downloadURL    https://github.com/Legend-Master/Google-Translate-Focus-Input/raw/main/google_translate_focus_input.user.js
