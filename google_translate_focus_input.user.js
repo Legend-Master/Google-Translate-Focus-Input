@@ -18,13 +18,14 @@
 (function() {
     'use strict';
 
+    // First textarea element is the source input currently, may change/break in the future
     const textarea = document.getElementsByTagName('textarea')[0]
     if (textarea) {
         document.addEventListener('keydown', (event) => {
-            // I don't know what N1 is, but it seems to indicate input focus
+            // Don't know how to test if user has input focus, textarea tag test for now
             // key.length is a kinda hacky way to determine if it's a printable char
             if (
-                !event.N1
+                document.activeElement?.type !== 'textarea'
                 && !event.repeat
                 && (
                     event.key.length === 1
