@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Google Translate Focus Input On Type
 // @namespace      https://github.com/Legend-Master
-// @version        0.1
+// @version        0.2
 // @author         Tony
 // @description    Focus input area on type for Google Translate
 // @description:zh 在 Google Translate 输入的时候聚焦输入框
