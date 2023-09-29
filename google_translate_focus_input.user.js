@@ -22,6 +22,10 @@ document.addEventListener('keydown', (event) => {
 	if (event.repeat) {
 		return
 	}
+	// Ignore control c
+	if (event.ctrlKey && event.key === 'c') {
+		return
+	}
 	// Don't know how to test if user has input focus, textarea tag test for now
 	if (document.activeElement instanceof HTMLTextAreaElement) {
 		return
