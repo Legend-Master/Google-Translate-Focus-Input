@@ -1,3 +1,4 @@
+// @ts-check
 // ==UserScript==
 // @name           Google Translate Focus Input On Type
 // @namespace      https://github.com/Legend-Master
@@ -15,26 +16,23 @@
 // @grant          none
 // ==/UserScript==
 
-(function() {
-    'use strict';
-
-    // First textarea element is the source input currently, may change/break in the future
-    const textarea = document.getElementsByTagName('textarea')[0]
-    if (textarea) {
-        document.addEventListener('keydown', (event) => {
-            // Don't know how to test if user has input focus, textarea tag test for now
-            // key.length is a kinda hacky way to determine if it's a printable char
-            if (
-                document.activeElement?.type !== 'textarea'
-                && !event.repeat
-                && (
-                    event.key.length === 1
-                    || event.key === 'Backspace'
-                    || event.key === 'Delete'
-                )
-            ) {
-                textarea.focus()
-            }
-        })
-    }
-})();
+/** @type {HTMLTextAreaElement | undefined} */
+let textarea
+document.addEventListener('keydown', (event) => {
+	if (event.repeat) {
+		return
+	}
+	// Don't know how to test if user has input focus, textarea tag test for now
+	if (document.activeElement instanceof HTMLTextAreaElement) {
+		return
+	}
+	// key.length is a kinda hacky way to determine if it's a printable character
+	if (event.key.length === 1 || event.key === 'Backspace' || event.key === 'Delete') {
+		// Don't know why sometimes it deletes and re-adds the textarea
+		if (!textarea?.isConnected) {
+			// First textarea element is the source input currently, may change/break in the future
+			textarea = document.getElementsByTagName('textarea')[0]
+		}
+		textarea?.focus()
+	}
+})
