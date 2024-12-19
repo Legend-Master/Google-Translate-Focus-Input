@@ -18,16 +18,26 @@
 
 /** @type {HTMLTextAreaElement | undefined} */
 let textarea
+let hasKeyboardEvent = false
+
 document.addEventListener('keydown', (event) => {
-	if (event.repeat) {
+	if (event.repeat || event.altKey) {
 		return
 	}
-	// Ignore control c
-	if (event.ctrlKey && event.key === 'c') {
+	// Ignore control/command c
+	if ((event.ctrlKey || event.metaKey) && event.key === 'c') {
 		return
 	}
-	// Don't know how to test if user has input focus, textarea tag test for now
-	if (document.activeElement instanceof HTMLTextAreaElement) {
+	// Ignore space bar when using keyboard navigation
+	if (event.key === ' ' && hasKeyboardEvent) {
+		return
+	}
+	// Ignore if we're focusing on an editable element
+	if (
+		event.target instanceof HTMLTextAreaElement ||
+		event.target instanceof HTMLInputElement ||
+		(event.target instanceof HTMLElement && event.target.isContentEditable)
+	) {
 		return
 	}
 	// key.length is a kinda hacky way to determine if it's a printable character
@@ -40,3 +50,15 @@ document.addEventListener('keydown', (event) => {
 		textarea?.focus()
 	}
 })
+
+// Track if we're using keyboard navigation,
+// assume we're if we hit any keys,
+// and assume we're not when we get a pointer down event
+// Make sure this event listener runs after all the `hasKeyboardEvent` consumers
+document.addEventListener('keydown', (ev) => {
+	if (ev.metaKey || ev.altKey || ev.ctrlKey) {
+		return
+	}
+	hasKeyboardEvent = true
+})
+document.addEventListener('pointerdown', () => (hasKeyboardEvent = false))
